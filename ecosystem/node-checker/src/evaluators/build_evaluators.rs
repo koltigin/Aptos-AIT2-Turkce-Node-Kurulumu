@@ -10,8 +10,8 @@ use crate::{
             TpsEvaluatorError, TransactionPresenceEvaluator,
         },
         metrics::{
-            ConsensusProposalsEvaluator, MetricsEvaluatorError, MetricsEvaluatorInput,
-            StateSyncVersionEvaluator,
+            ConsensusProposalsEvaluator, ConsensusRoundEvaluator, ConsensusTimeoutsEvaluator,
+            MetricsEvaluatorError, MetricsEvaluatorInput, StateSyncVersionEvaluator,
         },
         system_information::{
             BuildVersionEvaluator, SystemInformationEvaluatorError, SystemInformationEvaluatorInput,
@@ -97,6 +97,16 @@ pub fn build_evaluators(
     let mut evaluators: Vec<EvaluatorType> = vec![];
 
     ConsensusProposalsEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
+    ConsensusRoundEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
+    ConsensusTimeoutsEvaluator::add_from_evaluator_args(
         &mut evaluators,
         &mut evaluator_names,
         evaluator_args,
