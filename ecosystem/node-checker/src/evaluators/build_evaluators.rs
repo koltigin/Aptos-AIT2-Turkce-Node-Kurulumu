@@ -11,7 +11,8 @@ use crate::{
         },
         metrics::{
             ConsensusProposalsEvaluator, ConsensusRoundEvaluator, ConsensusTimeoutsEvaluator,
-            MetricsEvaluatorError, MetricsEvaluatorInput, StateSyncVersionEvaluator,
+            MetricsEvaluatorError, MetricsEvaluatorInput, NetworkMinimumPeersEvaluator,
+            NetworkPeersWithinToleranceEvaluator, StateSyncVersionEvaluator,
         },
         system_information::{
             BuildVersionEvaluator, SystemInformationEvaluatorError, SystemInformationEvaluatorInput,
@@ -96,6 +97,11 @@ pub fn build_evaluators(
     let mut evaluator_names: HashSet<String> = evaluator_names.iter().cloned().collect();
     let mut evaluators: Vec<EvaluatorType> = vec![];
 
+    BuildVersionEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
     ConsensusProposalsEvaluator::add_from_evaluator_args(
         &mut evaluators,
         &mut evaluator_names,
@@ -111,22 +117,27 @@ pub fn build_evaluators(
         &mut evaluator_names,
         evaluator_args,
     )?;
-    StateSyncVersionEvaluator::add_from_evaluator_args(
-        &mut evaluators,
-        &mut evaluator_names,
-        evaluator_args,
-    )?;
-    BuildVersionEvaluator::add_from_evaluator_args(
-        &mut evaluators,
-        &mut evaluator_names,
-        evaluator_args,
-    )?;
-    TpsEvaluator::add_from_evaluator_args(&mut evaluators, &mut evaluator_names, evaluator_args)?;
     LatencyEvaluator::add_from_evaluator_args(
         &mut evaluators,
         &mut evaluator_names,
         evaluator_args,
     )?;
+    NetworkMinimumPeersEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
+    NetworkPeersWithinToleranceEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
+    StateSyncVersionEvaluator::add_from_evaluator_args(
+        &mut evaluators,
+        &mut evaluator_names,
+        evaluator_args,
+    )?;
+    TpsEvaluator::add_from_evaluator_args(&mut evaluators, &mut evaluator_names, evaluator_args)?;
     TransactionPresenceEvaluator::add_from_evaluator_args(
         &mut evaluators,
         &mut evaluator_names,
