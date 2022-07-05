@@ -101,7 +101,7 @@ aptos genesis set-validator-configuration \
 Yukarıdaki kod sonrasında NODE_ADINIZ.yaml şeklinde bir dosya oluşacak.
 Bu dosya içeriğini aşağıdaki kodla kontrol ediyoruz.
 ```
-cat $HOME/$WORKSPACE/NodeName.yaml
+cat $HOME/$WORKSPACE/NODE_ADINIZ.yaml
 ```
 
 Dosya içeriği aşağıdakine benzer şekilde ise sıkıntı yoktur. Keylerinizi kayıt olurken kullanacaksınız.
